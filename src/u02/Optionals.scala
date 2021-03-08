@@ -29,7 +29,7 @@ object Optionals extends App {
       case Some(a) => if (p(a)) { opt } else { None() }
     }
 
-    def map[A](opt: Option[A])(p:A => Boolean): Option[A] = opt match {
+    def map[A](opt: Option[A])(p:A => Boolean): Option[Boolean] = opt match {
       case None() => None()
       case Some(a) => Some(p(a))
     }
