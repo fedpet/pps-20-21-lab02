@@ -33,6 +33,14 @@ object Optionals extends App {
       case None() => None()
       case Some(a) => Some(p(a))
     }
+
+    def map2[A, B](opt1: Option[A], opt2:Option[A])(m:(A,A) => B): Option[B] = opt1 match {
+      case None() => None()
+      case Some(v1) => opt2 match {
+        case None() => None()
+        case Some(v2) => Some(m(v1, v2))
+      }
+    }
   }
 
   import Option._

@@ -14,4 +14,8 @@ class OptionTest {
     assertEquals(Some(true), map(Some(5))(_ > 2))
     assertEquals(None, map(None[Int]())(_ > 2))
   }
+  @Test def testMap2() {
+    assertEquals(Some(10), map2(Some(2), Some(8))(_ + _))
+    assertEquals(None, map2(None(), Some(8))(_ + _))
+  }
 }
