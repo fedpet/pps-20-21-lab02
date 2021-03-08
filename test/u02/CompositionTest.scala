@@ -6,10 +6,9 @@ import u02.Hello.compose
 
 class CompositionTest {
   @Test def testComposition() {
-    val f: Int => Int = _ * 2
-    val g: Int => Int = _ - 1
-    assertEquals(0, compose(f, g)(1))
-    assertEquals(2, compose(f, g)(2))
-    assertEquals(6, compose(f, g)(4))
+    assertEquals(0, compose(_ * 2, _ - 1)(1))
+    assertEquals(2, compose(_ * 2, _ - 1)(2))
+    assertEquals(6, compose(_ * 2, _ - 1)(4))
+    assertEquals(9, compose(_ - 1, _ * 2)(5))
   }
 }
