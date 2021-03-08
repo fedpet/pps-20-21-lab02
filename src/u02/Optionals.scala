@@ -1,5 +1,7 @@
 package u02
 
+import u02.Optionals.Option.{None, Some}
+
 object Optionals extends App {
 
   sealed trait Option[A] // An Optional data type
@@ -20,6 +22,16 @@ object Optionals extends App {
     def flatMap[A,B](opt: Option[A])(f:A => Option[B]): Option[B] = opt match {
       case Some(a) => f(a)
       case _ => None()
+    }
+
+    def filter[A](opt: Option[A])(p:A => Boolean): Option[A] = opt match {
+      case None() => None()
+      case Some(a) => if (p(a)) { opt } else { None() }
+    }
+
+    def map[A](opt: Option[A])(p:A => Boolean): Option[A] = opt match {
+      case None() => None()
+      case Some(a) => Some(p(a))
     }
   }
 
