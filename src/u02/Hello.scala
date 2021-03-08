@@ -4,6 +4,10 @@ object Hello {
   def parity(x: Int): String = if (x % 2 == 0) "even" else "odd"
 
   def neg[T](predicate: T => Boolean): T => Boolean = !predicate(_)
+  val vneg:(String => Boolean) => String => Boolean = (predicate:String => Boolean) => !predicate(_)
+  /**
+   * Unico problema risontrato: impossibilità di rendere vneg generica
+   */
 
   val p1: Int => Int => Int => Boolean = (x:Int) => (y:Int) => (z:Int) => x <= y && y <= z
   val p2: (Int, Int, Int) => Boolean = (x:Int, y:Int, z:Int) => x <= y && y <= z
