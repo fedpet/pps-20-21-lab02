@@ -11,4 +11,14 @@ object Hello {
   def p4(x:Int, y:Int, z:Int): Boolean = x <= y && y <= z
 
   def compose[A, B, C](f:B => C, g:A => B): A => C = x => f(g(x))
+
+  def fib(n:Int):Int = {
+    @annotation.tailrec
+    def fib2(n:Int, a:Int, b:Int):Int = n match {
+      case 0 => a
+      case 1 => b
+      case _ => fib2(n-1, b, a+b)
+    }
+    fib2(n, 0, 1)
+  }
 }
