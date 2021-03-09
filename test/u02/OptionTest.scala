@@ -18,4 +18,13 @@ class OptionTest {
     assertEquals(Some(10), map2(Some(2), Some(8))(_ + _))
     assertEquals(None(), map2(None(), Some(8))(_ + _))
   }
+  @Test def testDouble() {
+    assertEquals(Some(10), double(Some(5)))
+    assertEquals(None(), double(None()))
+  }
+  @Test def testInvert() {
+    assertEquals(Some(false), invert(Some(true)))
+    assertEquals(Some(true), invert(Some(false)))
+    assertEquals(None(), invert(None()))
+  }
 }
