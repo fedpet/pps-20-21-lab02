@@ -42,8 +42,8 @@ object Optionals extends App {
 
     def mapContent[A](opt: Option[A])(mapper:A => A): Option[A] = flatMap(opt)(x => Some(mapper(x)))
 
-    def double(opt: Option[Int]) = mapContent(opt)(_ * 2)
+    def double(opt: Option[Int]): Option[Int] = mapContent(opt)(_ * 2)
 
-    def invert(opt: Option[Boolean]) = mapContent(opt)(!_)
+    def invert(opt: Option[Boolean]): Option[Boolean] = mapContent(opt)(!_)
   }
 }
