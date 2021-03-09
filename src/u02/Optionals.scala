@@ -39,5 +39,9 @@ object Optionals extends App {
       case (Some(v1), Some(v2)) => Some(mapper(v1, v2))
       case _ => None()
     }
+
+    def double(opt: Option[Int]) = flatMap(opt)(x => Some(x * 2))
+
+    def invert(opt: Option[Boolean]) = flatMap(opt)(x => Some(!x))
   }
 }
