@@ -8,18 +8,16 @@ object BTrees extends App {
     case class Leaf[A](value: A) extends Tree[A]
     case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
-    def size[A](t: Tree[A]): Int = traverse(t)((l,r) => size(l) + size(r))(_ => 1)
+    def size[A](t: Tree[A]): Int = mapReduce[A, Int](t, _ => 1, _+_)
 
-    def find[A](t: Tree[A], elem: A): Boolean = traverse(t)((l,r) => find(l, elem) || find (r,elem))(_ == elem)
+    def find[A](t: Tree[A], elem: A): Boolean = mapReduce[A, Boolean](t, _ == elem, _||_)
 
-    def count[A](t: Tree[A], elem: A): Int = traverse(t)((l, r) => count(l, elem) + count(r, elem))(_ match {
-        case x if x == elem => 1
-        case _ => 0
-      }) // or better yet if(_ == elem) 1 else 0
+    def count[A](t: Tree[A], elem: A): Int = mapReduce[A, Int](t, x => if (x==elem) 1 else 0, _+_)
+    // or  _.equals(elem).compare(false) if we don't want to use "if" yet
 
-    private def traverse[A, B](t: Tree[A])(branchMapper:(Tree[A], Tree[A]) => B)(leafMapper:A => B): B = t match {
-      case Branch(l, r) => branchMapper(l, r)
-      case Leaf(e) => leafMapper(e)
+    private def mapReduce[A, B](t: Tree[A], map:A => B, reduce:(B,B) => B): B = t match {
+      case Branch(l, r) => reduce(mapReduce(l, map, reduce), mapReduce(r, map, reduce))
+      case Leaf(e) => map(e)
     }
   }
 }
