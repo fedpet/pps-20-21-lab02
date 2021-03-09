@@ -8,27 +8,18 @@ object BTrees extends App {
     case class Leaf[A](value: A) extends Tree[A]
     case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 
-    def size[A](t: Tree[A]): Int = t match {
-      case Branch(l, r) => size(l) + size(r)
-      case _ => 1
+    private def traverse[A, B](t: Tree[A])(branchMapper:(Tree[A], Tree[A]) => B)(leafMapper:A => B): B = t match {
+      case Branch(l, r) => branchMapper(l, r)
+      case Leaf(e) => leafMapper(e)
     }
 
-    def find[A](t: Tree[A], elem: A): Boolean = t match {
-      case Branch(l, r) => find(l, elem) || find (r,elem)
-      case Leaf(e) => e==elem
-    }
+    def size[A](t: Tree[A]): Int = traverse(t)((l,r) => size(l) + size(r))(_ => 1)
 
-    def count[A](t: Tree[A], elem: A): Int = t match {
-      case Branch(l, r) => count(l, elem) + count(r,elem)
-      case Leaf(e) if (e==elem) => 1
-      case _ => 0
-    }
+    def find[A](t: Tree[A], elem: A): Boolean = traverse(t)((l,r) => find(l, elem) || find (r,elem))(_ == elem)
+
+    def count[A](t: Tree[A], elem: A): Int = traverse(t)((l, r) => count(l, elem) + count(r, elem))(_ match {
+        case x if x == elem => 1
+        case _ => 0
+      }) // or better yet if(_ == elem) 1 else 0
   }
-
-  import Tree._
-  val tree = Branch(Branch(Leaf(1),Leaf(2)),Leaf(1))
-  println(tree, size(tree)) // ..,3
-  println( find(tree, 1)) // true
-  println( find(tree, 4)) // false
-  println( count(tree, 1)) // 2
 }
