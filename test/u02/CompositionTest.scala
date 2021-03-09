@@ -2,7 +2,7 @@ package u02
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import u02.Hello.compose
+import u02.Lab2Impl.compose
 
 class CompositionTest {
   @Test def testComposition() {

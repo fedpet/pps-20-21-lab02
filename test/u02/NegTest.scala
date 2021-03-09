@@ -2,7 +2,7 @@ package u02
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import u02.Hello.{neg, vneg}
+import u02.Lab2Impl.{neg, vneg}
 
 class NegTest {
   val empty: String => Boolean = _==""

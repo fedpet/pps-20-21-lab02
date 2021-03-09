@@ -2,7 +2,7 @@ package u02
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import u02.Hello.{p1, p2, p3, p4}
+import u02.Lab2Impl.{p1, p2, p3, p4}
 
 class CurryingTest {
   @Test def testCurrying() {

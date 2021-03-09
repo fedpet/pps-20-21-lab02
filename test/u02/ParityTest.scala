@@ -2,7 +2,7 @@ package u02
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import u02.Hello.parity
+import u02.Lab2Impl.parity
 
 class ParityTest {
   @Test def testParity() {

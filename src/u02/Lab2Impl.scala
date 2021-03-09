@@ -1,6 +1,6 @@
 package u02
 
-object Hello {
+object Lab2Impl {
   def parity(x: Int): String = if (x % 2 == 0) "even" else "odd"
 
   def neg[T](predicate: T => Boolean): T => Boolean = !predicate(_)

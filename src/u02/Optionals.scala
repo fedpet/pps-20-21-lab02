@@ -1,7 +1,5 @@
 package u02
 
-import u02.Optionals.Option.{None, Some}
-
 object Optionals extends App {
 
   sealed trait Option[A] // An Optional data type
@@ -26,31 +24,20 @@ object Optionals extends App {
 
     def filter[A](opt: Option[A])(p:A => Boolean): Option[A] = opt match {
       case None() => None()
-      case Some(a) => if (p(a)) { opt } else { None() }
-    }
-
-    def map[A](opt: Option[A])(p:A => Boolean): Option[Boolean] = opt match {
-      case None() => None()
-      case Some(a) => Some(p(a))
-    }
-
-    def map2[A, B](opt1: Option[A], opt2:Option[A])(m:(A,A) => B): Option[B] = opt1 match {
-      case None() => None()
-      case Some(v1) => opt2 match {
-        case None() => None()
-        case Some(v2) => Some(m(v1, v2))
+      case Some(a) => p(a) match {
+        case true => opt
+        case false => None()
       }
     }
+
+    def map[A](opt: Option[A])(predicate:A => Boolean): Option[Boolean] = opt match {
+      case None() => None()
+      case Some(a) => Some(predicate(a))
+    }
+
+    def map2[A, B](opt1: Option[A], opt2:Option[A])(mapper:(A,A) => B): Option[B] = (opt1, opt2) match {
+      case (Some(v1), Some(v2)) => Some(mapper(v1, v2))
+      case _ => None()
+    }
   }
-
-  import Option._
-  val s1: Option[Int] = Some(1)
-  val s2: Option[Int] = Some(2)
-  val s3: Option[Int] = None()
-
-  println(s1) // Some(1)
-  println(getOrElse(s1,0), getOrElse(s3,0)) // 1,0
-  println(flatMap(s1)(i => Some(i+1))) // Some(2)
-  println(flatMap(s1)(i => flatMap(s2)(j => Some(i+j)))) // Some(3)
-  println(flatMap(s1)(i => flatMap(s3)(j => Some(i+j)))) // None
 }
